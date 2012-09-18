@@ -72,6 +72,20 @@ Most of the chain operators accept functions of either one, two, or three argume
 
 In almost every case, if the function `fn` is omitted, it defaults to the identity function.  This is not particularly interesting for (e.g.) `map`, but is often useful in (e.g.) `sort_by`.
 
+Most of the chain operations will implicitly convert `dict`s to sequences of key-value pairs, so that you could do something like
+
+    (Chain(my_dict)
+        .map(lambda (k,v): (k, v + 1))
+        .to_dict()
+        .value())
+
+Although the operations that assume an order generally don't, so that
+
+    Chain(my_dict).first(1).value()
+    
+might not do what you expect.  (It's not clear what you'd expect it to do anyway.)
+        
+
 # Operators
 
 In all of the below, "returns..." really means "replaces the collection stored in Chain with..."
